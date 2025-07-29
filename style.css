@@ -1,17 +1,115 @@
+/* Reset & base */
 body {
-    font-family: sans-serif;
-    text-align: center;
-    background: #f5f5f5;
     margin: 0;
-  }
-  header, footer {
-    background: #222;
+    padding: 0;
+    background-color: #000;
     color: #fff;
-    padding: 1rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
-  img {
-    max-width: 100%;
+  
+  /* Header */
+  header {
+    font-size: 3rem;
+    font-style: italic;
+    font-weight: bold;
+    color: #7fdbff;
+    margin-top: 2rem;
+    letter-spacing: 0.3rem;
+  }
+  
+  /* Dua text */
+  #duaText {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #fff;
+    margin: 1.5rem 1rem 2rem 1rem;
+    max-width: 800px;
+  }
+  
+  /* Image container */
+  #imageContainer {
+    margin-bottom: 1.5rem;
+  }
+  
+  #dailyImage {
+    width: 800px;
+    max-width: 90vw;
     height: auto;
-    margin: 2rem 0;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+  }
+  
+  #dailyImage:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Caption */
+  #caption {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    color: #ccc;
+  }
+  
+  /* Spotify section */
+  #spotifySection {
+    margin: 2.5rem auto;
+  }
+  
+  #spotifyHeader {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #7fdbff;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05rem;
+  }
+  
+  #spotifyEmbed {
+    width: 300px;
+    height: 80px;
+    display: block;
+    margin: 20px auto;
+  }
+  
+  /* Pause of the Month */
+  #pauseContainer {
+    margin: 3rem auto 4rem auto;
+    background-color: #111;
+    border: 1px solid #444;
+    padding: 1.5rem;
+    border-radius: 8px;
+    max-width: 800px;
+    width: 90%;
+    transition: background-color 0.3s ease;
+  }
+  
+  #pauseContainer:hover {
+    background-color: #1a1a1a;
+  }
+  
+  #pauseHeader {
+    font-size: 1.25rem;
+    color: #7fdbff;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+  }
+  
+  #pauseText {
+    white-space: pre-wrap;
+    line-height: 1.5;
+    color: #ccc;
+    font-size: 1rem;
+  }
+  
+  /* Footer */
+  footer {
+    margin-top: auto;
+    padding: 2rem 0;
+    font-size: 0.9rem;
+    color: #555;
   }
   

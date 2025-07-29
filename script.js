@@ -1,25 +1,40 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const today = new Date();
-    const yyyy = today.getFullYear();
+    const today = new Date(); // Or statically: new Date("2025-08-01")
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
+    const yyyy = today.getFullYear();
     const filename = `${mm}-${dd}-${yyyy}.jpg`;
-
     const imagePath = `images/${filename}`;
-
+    const defaultImage = 'images/default.jpg';
+  
+    const imageElement = document.getElementById('dailyImage');
+    const captionElement = document.getElementById('caption');
+  
+    // Normalize for range
+    const normalizedToday = new Date(2025, today.getMonth(), today.getDate());
     const startDate = new Date("2025-08-01");
     const endDate = new Date("2026-01-13");
-
-    // Normalize today's date to ignore time
-    const normalizedToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-
-    const imageElement = document.getElementById('dailyImage');
+  
     if (normalizedToday >= startDate && normalizedToday <= endDate) {
-        imageElement.src = imagePath;
+      fetch(imagePath)
+        .then(response => {
+          if (response.ok) {
+            imageElement.src = imagePath;
+          } else {
+            imageElement.src = defaultImage;
+          }
+        })
+        .catch(() => {
+          imageElement.src = defaultImage;
+        });
     } else {
-        imageElement.src = 'images/default.jpg';
+      imageElement.src = defaultImage;
     }
+  
+    // Set caption with date
+    captionElement.textContent = `Dua stuns on ${mm}/${dd}/${yyyy}`;
 
+    // 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
     // Spotify logic synced with same date logic
     const spotifyTrackIDs = [
         "0gEyKnHvgkrkBM6fbeHdwK",
@@ -190,16 +205,12 @@ document.addEventListener("DOMContentLoaded", () => {
         "6K4t31amVTZDgR3sKmwUJJ",
         "5ZvHcR4OSwvEV5IhigbTOT"
     ];
+const daysSinceStart = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+const trackIndex = daysSinceStart >= 0 && daysSinceStart < spotifyTrackIDs.length ? daysSinceStart : 0;
 
-    const oneDay = 24 * 60 * 60 * 1000;
-    const dayDiff = Math.floor((normalizedToday - startDate) / oneDay);
+  const trackID = spotifyTrackIDs[trackIndex];
 
-    const spotifyEmbed = document.getElementById('spotifyEmbed');
-    if (dayDiff >= 0 && dayDiff < spotifyTrackIDs.length) {
-        const trackID = spotifyTrackIDs[dayDiff];
-        spotifyEmbed.src = `https://open.spotify.com/embed/track/${trackID}`;
-        spotifyEmbed.style.display = 'block';
-    } else {
-        spotifyEmbed.style.display = 'none'; // Hide if out of bounds
-    }
+  const spotifyEmbed = document.getElementById('spotifyEmbed');
+  spotifyEmbed.src = `https://open.spotify.com/embed/track/${trackID}`;
+  spotifyEmbed.style.display = 'block';
 });
