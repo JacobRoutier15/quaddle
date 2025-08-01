@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
     const yyyy = today.getFullYear();
-    const filename = `${mm}-${dd}-${yyyy}.jpg`;
+    const filename = `${mm}-${dd}-${yyyy}.JPG`;
     const imagePath = `images/${filename}`;
     const defaultImage = 'images/default.jpg';
   
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Set caption with date
     captionElement.textContent = `Dua stuns on ${mm}/${dd}/${yyyy}`;
 
-    // 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
+
     // Spotify logic synced with same date logic
     const spotifyTrackIDs = [
         "0gEyKnHvgkrkBM6fbeHdwK",
