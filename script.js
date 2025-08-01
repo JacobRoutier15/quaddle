@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     // Set caption with date
-    captionElement.textContent = `Dua stuns on ${mm}/${dd}/${yyyy}`;
+    captionElement.textContent = `${mm}/${dd}/${yyyy}`;
 
 
     // Spotify logic synced with same date logic
