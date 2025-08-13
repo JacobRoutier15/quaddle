@@ -151,13 +151,13 @@ body {
 
 /* Calendar page */
 .calendar {
-  margin: 2rem auto 3rem auto;
+  margin: 1rem auto 2rem;
   max-width: 820px;
   width: 92vw;
   background: #0b0b0b;
   border: 1px solid #333;
   border-radius: 8px;
-  padding: 1rem;
+  padding: .5rem;
 }
 
 .cal-header {
@@ -166,7 +166,9 @@ body {
   align-items: center;
   color: #7fdbff;
   margin-bottom: .5rem;
+  gap: .5rem;
 }
+#monthLabel {font-size: clamp(1rem, 4vw, 1.25rem);}
 
 .cal-nav-btn {
   background: #111;
@@ -180,23 +182,25 @@ body {
 
 .cal-weekdays,
 .cal-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: .35rem;
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)); /* never stack vertically */
+  gap: .25rem;
 }
 
 .cal-weekdays div {
   color: #aaa;
-  font-size: .9rem;
+  font-size: .75rem;
   padding: .4rem 0;
+  letter-spacing: .02em;
 }
 
 .cal-day {
   background: #111;
   border: 1px solid #222;
   border-radius: 6px;
-  min-height: 72px;
-  padding: .5rem;
+  min-height: clamp(44px, 11vw, 72px);   /* smaller on phones */
+  padding: .35rem;
+  overflow: hidden;
   text-align: left;
   position: relative;
   cursor: pointer;
@@ -208,7 +212,7 @@ body {
 .cal-day.today { border-color:#7fdbff; box-shadow: 0 0 0 1px #124a57 inset; }
 
 .cal-date {
-  font-size: .95rem;
+  font-size: clamp(.75rem, 2.4vw, .95rem);
   font-weight: 600;
   color: #ccc;
 }
@@ -224,7 +228,7 @@ body {
   background: #111;
   border: 1px solid #333;
   border-radius: 8px;
-  padding: 1rem;
+  padding: .8rem;
   margin: 1rem auto 1.2rem auto;
   max-width: 820px;
   width: 92vw;
@@ -244,14 +248,18 @@ body {
 
 .gallery-image {
   width: 100%;
-  height: auto;
+  aspect-ratio: 1 / 1;        /* square format like Instagram */
+  object-fit: cover;          /* crops to fit square */
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s ease;
+  border: 1px solid #333;
+  background: #0b0b0b;
+  box-shadow: 0 0 10px rgba(255,255,255,0.08);
+  transition: transform .2s ease, box-shadow .2s ease;
 }
 
 .gallery-image:hover {
-  transform: scale(1.02);
+  transform: scale(1.02);     /* grows slightly on hover */
+  box-shadow: 0 0 12px rgba(255,255,255,0.15);
 }
 
 
