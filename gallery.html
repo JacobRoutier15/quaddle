@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Memories — Quaddle</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <nav class="top-nav">
+      <a href="index.html">Home</a>
+      <a href="calendar.html">Calendar</a>
+      <a href="misc.html">Hall of Shame</a>
+    </nav>
+
+    <header>
+      <h1 id="main-title">Q U A D D L E</h1>
+    </header>
+
+     <main>
+      <h2>Quaddlers Doing Stuff</h2>
+      <!-- Missing before -->
+      <div id="gallery" class="gallery-grid"></div>
+    </main>
+
+   
+
+  </div>
+
+  <footer>
+    &copy; 2025 quaddle.org — made by yacob
+  </footer>
+   <script>
+  // List of image filenames in QuaddleG folder
+  const imageFiles = [
+    "IMG_01.jpg",
+    "IMG_02.JPG",
+    "IMG_03.jpg",
+    "IMG_06.jpg",
+    "IMG_07.jpg",
+    "IMG_09.jpg",
+    "IMG_10.JPG",
+    "IMG_11.JPG",
+    "IMG_12.JPG",
+    "IMG_13.JPG",
+    "IMG_14.JPG",
+    "IMG_15.JPG",
+    "IMG_16.JPG",
+    "IMG_17.JPG",
+    "IMG_18.jpg",
+    "IMG_19.jpg",
+    "IMG_20.JPG",
+    "IMG_21.JPG",
+    "IMG_22.JPG",
+    "IMG_23.jpg",
+    "IMG_24.JPG",
+    "IMG_25.JPG",
+    "IMG_26.JPG",
+    "IMG_27.JPG"
+  ];
+
+  const galleryContainer = document.getElementById("gallery");
+
+  imageFiles.forEach(file => {
+    const img = document.createElement("img");
+    img.src = `QuaddleG/${file}`;
+    img.alt = file;
+    img.classList.add("gallery-image");
+    galleryContainer.appendChild(img);
+  });
+    </script>
+
+</body>
+</html>

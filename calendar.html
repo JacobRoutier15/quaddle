@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calendar — Quaddle</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <nav class="top-nav">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Memories</a>
+      <a href="misc.html">Hall of Shame</a>
+    </nav>
+
+    <header>
+      <h1 id="main-title">Q U A D D L E</h1>
+    </header>
+
+    <!-- Event card -->
+    <section id="eventCard" class="event-card" aria-live="polite">
+      <div class="event-empty">Select a date to see details.</div>
+    </section>
+
+    <!-- Calendar -->
+    <section class="calendar" aria-label="Calendar">
+      <div class="cal-header">
+        <button class="cal-nav-btn" id="prevMonth" type="button" aria-label="Previous month">←</button>
+        <div id="monthLabel"></div>
+        <button class="cal-nav-btn" id="nextMonth" type="button" aria-label="Next month">→</button>
+      </div>
+
+      <div class="cal-weekdays">
+        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+      </div>
+      <div id="calGrid" class="cal-grid"></div>
+    </section>
+  </div>
+
+  <footer>
+    &copy; 2025 quaddle.org — made by yacob
+  </footer>
+
+  <script>
+    // Sample events (replace with your data source)
+    const EVENTS = {
+      // ISO date string → array of events
+      "2025-08-15": [{ title: "Quaddle Reunion in El Paso", time: "All Day", desc: "GUAC & MARGS" }],
+      "2025-08-18": [{ title: "Ali & Yacob Go Home :((", time: "All Day", desc: "Kms?" }],
+      "2025-10-12": [{ title: "ACL WEEKEND 2", time: "All Day", desc: "On GOD you bitches will be in attendance"}]
+    };
+
+    const calGrid = document.getElementById('calGrid');
+    const monthLabel = document.getElementById('monthLabel');
+    const eventCard = document.getElementById('eventCard');
+
+    let viewYear, viewMonth; // month is 0-based
+
+    function startOfMonth(y, m){ return new Date(y, m, 1); }
+    function endOfMonth(y, m){ return new Date(y, m + 1, 0); }
+
+    function fmtISO(d){
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function renderEvents(dateStr){
+      const items = EVENTS[dateStr] || [];
+      if (!items.length) {
+        eventCard.innerHTML = `<div class="event-empty">No events for ${dateStr}.</div>`;
+        return;
+      }
+      const parts = items.map(e => `
+        <div class="event-item">
+          <h3 class="event-title">${e.title}</h3>
+          <div class="event-when">${dateStr}${e.time ? ` · ${e.time}` : ""}</div>
+          <div class="event-desc">${e.desc || ""}</div>
+        </div>
+      `).join("<hr style='border-color:#222;'>");
+      eventCard.innerHTML = parts;
+    }
+
+    function renderCalendar(y, m){
+      calGrid.innerHTML = '';
+      const today = new Date();
+      const s = startOfMonth(y, m);
+      const e = endOfMonth(y, m);
+
+      const monthName = s.toLocaleString(undefined, { month:'long', year:'numeric' });
+      monthLabel.textContent = monthName;
+
+      const firstWeekday = s.getDay(); // 0..6
+      const daysInMonth = e.getDate();
+
+      // Previous month tail
+      const prevEnd = endOfMonth(y, m-1).getDate();
+      for (let i = 0; i < firstWeekday; i++){
+        const d = prevEnd - (firstWeekday - 1 - i);
+        const cell = document.createElement('div');
+        cell.className = 'cal-day out-month';
+        cell.innerHTML = `<div class="cal-date">${d}</div>`;
+        cell.setAttribute('aria-disabled','true');
+        calGrid.appendChild(cell);
+      }
+
+      // Current month
+      for (let d = 1; d <= daysInMonth; d++){
+        const cellDate = new Date(y, m, d);
+        const iso = fmtISO(cellDate);
+        const cell = document.createElement('div');
+        cell.className = 'cal-day';
+        if (today.toDateString() === cellDate.toDateString()) cell.classList.add('today');
+
+        const hasEvents = !!EVENTS[iso];
+        cell.innerHTML = `
+          <div class="cal-date">${d}</div>
+          ${hasEvents ? '<span class="cal-dot" aria-hidden="true"></span>' : ''}
+        `;
+        cell.tabIndex = 0;
+        cell.setAttribute('role','button');
+        cell.setAttribute('aria-label', `Select ${iso}${hasEvents ? ', has events' : ''}`);
+        cell.addEventListener('click', () => renderEvents(iso));
+        cell.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); renderEvents(iso); } });
+
+        calGrid.appendChild(cell);
+      }
+
+      // Next month head to fill the grid to complete weeks (optional)
+      const totalCells = calGrid.children.length;
+      const remainder = totalCells % 7;
+      if (remainder !== 0){
+        const fill = 7 - remainder;
+        for (let i=1; i<=fill; i++){
+          const cell = document.createElement('div');
+          cell.className = 'cal-day out-month';
+          cell.innerHTML = `<div class="cal-date">${i}</div>`;
+          cell.setAttribute('aria-disabled','true');
+          calGrid.appendChild(cell);
+        }
+      }
+    }
+
+    // Navigation
+    document.getElementById('prevMonth').addEventListener('click', () => {
+      viewMonth--;
+      if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+      renderCalendar(viewYear, viewMonth);
+    });
+    document.getElementById('nextMonth').addEventListener('click', () => {
+      viewMonth++;
+      if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+      renderCalendar(viewYear, viewMonth);
+    });
+
+    // Init
+    const now = new Date();
+    viewYear = now.getFullYear();
+    viewMonth = now.getMonth();
+    renderCalendar(viewYear, viewMonth);
+  </script>
+</body>
+</html>
