@@ -262,5 +262,19 @@ body {
   box-shadow: 0 0 12px rgba(255,255,255,0.15);
 }
 
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.6rem;padding:.6rem 1rem;}
+.gallery-image{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;border:1px solid #333;background:#0b0b0b;}
+.gallery-image:hover{transform:scale(1.02);}
 
+.cal-weekdays,.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.25rem;}
+.event-card{padding:1rem;}
+/* Center image when only one in the gallery */
+.gallery-grid.single-image {
+  display: flex;
+  justify-content: center;
+}
+
+.gallery-grid.single-image .gallery-image {
+  max-width: 400px; /* or any size you prefer */
+}
   

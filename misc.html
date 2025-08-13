@@ -4,7 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hall of Shame — Quaddle</title>
-  <link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="./style.css?v=20250812" />
+<style>
+/* critical fallback */
+.gallery-image{max-width:100%;width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
+.cal-weekdays,.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.25rem;}
+.cal-day{min-height:48px;padding:.35rem;overflow:hidden;}
+</style>
 </head>
 <body>
   <div class="container">
@@ -53,7 +59,7 @@
     &copy; 2025 quaddle.org — made by yacob
   </footer>
 
-  <script>
+<script>
   // List of image filenames in QuaddleG folder
   const imageFiles = [
     "IMG_028.JPG"
@@ -68,7 +74,13 @@
     img.classList.add("gallery-image");
     galleryContainer.appendChild(img);
   });
-    </script>
+
+  // Add single-image class if only one image in the gallery
+  if (imageFiles.length === 1) {
+    galleryContainer.classList.add("single-image");
+  }
+</script>
+
 
 </body>
 </html>

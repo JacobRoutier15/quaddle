@@ -4,7 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Calendar — Quaddle</title>
-  <link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="./style.css?v=20250812" />
+<style>
+/* critical fallback */
+.gallery-image{max-width:100%;width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
+.cal-weekdays,.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.25rem;}
+.cal-day{min-height:48px;padding:.35rem;overflow:hidden;}
+</style>
 </head>
 <body>
   <div class="container">
@@ -48,7 +54,7 @@
       // ISO date string → array of events
       "2025-08-15": [{ title: "Quaddle Reunion in El Paso", time: "All Day", desc: "GUAC & MARGS" }],
       "2025-08-18": [{ title: "Ali & Yacob Go Home :((", time: "All Day", desc: "Kms?" }],
-      "2025-10-12": [{ title: "ACL WEEKEND 2", time: "All Day", desc: "On GOD you bitches will be in attendance"}]
+      "2025-10-10": [{ title: "ACL WEEKEND 2", time: "All Day", desc: "On GOD you bitches will be in attendance"}]
     };
 
     const calGrid = document.getElementById('calGrid');
