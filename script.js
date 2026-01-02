@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const today = new Date(); // Or statically: new Date("2025-08-01")
+    const today = new Date(); // Or statically: new Date("2026-01-01")
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
     const yyyy = today.getFullYear();
@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const captionElement = document.getElementById('caption');
   
     // Normalize for range
-    const normalizedToday = new Date(2025, today.getMonth(), today.getDate());
-    const startDate = new Date("2025-08-01");
-    const endDate = new Date("2026-01-13");
+    const normalizedToday = new Date(2026, today.getMonth(), today.getDate());
+    const startDate = new Date("2026-01-01");
+    const endDate = new Date("2026-08-25");
   
     if (normalizedToday >= startDate && normalizedToday <= endDate) {
       fetch(imagePath)
