@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hall of Shame — Quaddle</title>
+<link rel="stylesheet" href="./style.css?v=20250812" />
+<style>
+/* critical fallback */
+.gallery-image{max-width:100%;width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
+.cal-weekdays,.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.25rem;}
+.cal-day{min-height:48px;padding:.35rem;overflow:hidden;}
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="main-title">A L I</h1>
+    </header>
+
+    <main>
+      <h2>Merry Christmas Ali!</h2>
+    </main>
+
+     <div id="gallery" class="gallery-grid"></div>
+     <p>Welcome to your very own page. I made this one just for you and I will add stuff to it for you from time to time. It is just for you, it doesn't link to the rest of the site, and you're the only one with your own page... So, feel special.</p>
+  <p>I love you (and Nala) more than you'll ever know and I will forever, no matter what. I am incredibly grateful that you put up with me and I can't put into words how much you mean to me. I care about you so much and I would do anything for you, all you'd ever have to do is let me.</p>
+<p>I am so proud of you for all of the training you've put in to get ready for this marathon and I know you'll do great and reach your goal. I wish you'd let me cross the finish line with you, but I hope you know I'll be the first person standing there waiting to congratulate you and give you a hug at the end.</p>  
+<p>Since you won't let me pace you (rude), I wanted to be with you during your race in some way. You've shown me all of my favorite artists & songs and been by my side at all of my favorite concerts. I love that we share so much music together and I hope we will forever. One day I hope we really give 2Blondez a try, I am ready when you are.</p>
+<p>I still have a longgg way to go and I can't wait to do it together with you, but I started to learn how to DJ and mix some songs together. I made you a mix of all of your favorite running songs. It happens to be exactly 4 hours long. So, if you come back to this page on race day it will be waiting for you. Just like I will be waiting for you at the end of the race for guac & margs, and like I would wait for you forever.</p>
+<p>You do NOT have to use this as your race playlist if you'd rather just make one, I made it for you and it is yours to do what you want with. I hope you enjoy it and that you know how much you are the music in my life and that I can't live without you. Thank you for everything you've done for me, for the best memories, and for never giving up on me. I will always be here for you and with you as long as you'll have me, no matter what.</p>
+</div>
+     
+  <footer>
+    &copy; always thinking of you — love yacob
+  </footer>
+
+<script>
+  // List of image filenames in QuaddleG folder
+  const imageFiles = [
+    "nala1.JPG",
+    "nala2.JPG"
+  ];
+
+  const galleryContainer = document.getElementById("gallery");
+
+  imageFiles.forEach(file => {
+    const img = document.createElement("img");
+    img.src = `QuaddleG/${file}`;
+    img.alt = file;
+    img.classList.add("gallery-image");
+    galleryContainer.appendChild(img);
+  });
+
+  // Add single-image class if only one image in the gallery
+  if (imageFiles.length === 1) {
+    galleryContainer.classList.add("single-image");
+  }
+</script>
+
+
+</body>
+</html>
