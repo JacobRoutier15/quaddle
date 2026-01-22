@@ -1,46 +1,46 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const img = document.getElementById("dailyImage");
+  const caption = document.getElementById("caption");
+  if (!img) return;
+
   const today = new Date();
   const mm = String(today.getMonth() + 1).padStart(2, "0");
   const dd = String(today.getDate()).padStart(2, "0");
   const yyyy = today.getFullYear();
 
-  const imageElement = document.getElementById("dailyImage");
-  const captionElement = document.getElementById("caption");
+  // Build URLs relative to the current page URL (fixes GitHub Pages base-path issues)
+  const urlFor = (rel) => new URL(rel, window.location.href).toString();
 
-  const defaultImage = "images/default.jpg";
-
-  // Try current year first, then fall back to 2025
+  // Keep your existing filename format; prefer current year, then fall back to 2025
   const candidates = [
-    `images/${mm}-${dd}-${yyyy}.JPG`,
-    `images/${mm}-${dd}-2025.JPG`
+    urlFor(`images/${mm}-${dd}-${yyyy}.JPG`),
+    urlFor(`images/${mm}-${dd}-2025.JPG`),
+    urlFor(`images/${mm}-${dd}-${yyyy}.jpg`),
+    urlFor(`images/${mm}-${dd}-2025.jpg`),
   ];
 
-  function tryLoad(index = 0) {
-    if (index >= candidates.length) {
-      imageElement.src = defaultImage;
+  const fallback = urlFor("images/default.jpg");
+
+  // Set caption (optional)
+  if (caption) caption.textContent = `${mm}/${dd}/${yyyy}`;
+
+  // Load first candidate that exists (no fetch; use image onerror)
+  let i = 0;
+  const loadNext = () => {
+    if (i >= candidates.length) {
+      img.onerror = null;
+      img.src = fallback;
       return;
     }
 
-    fetch(candidates[index], { cache: "no-store" })
-      .then((r) => {
-        if (r.ok) {
-          imageElement.src = candidates[index];
-        } else {
-          tryLoad(index + 1);
-        }
-      })
-      .catch(() => tryLoad(index + 1));
-  }
+    const nextUrl = candidates[i++];
+    img.onerror = loadNext;
+    img.src = nextUrl;
+  };
 
-  tryLoad();
-
-  captionElement.textContent = `${mm}/${dd}/${yyyy}`;
+  loadNext();
 });
 
-
-  
-    // Set caption with date
-    captionElement.textContent = `${mm}/${dd}/${yyyy}`;
 
 
     // Spotify logic synced with same date logic
