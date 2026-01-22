@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+<<<<<<< HEAD
     const today = new Date(); // Or statically: new Date("2026-01-01")
+=======
+    const today = new Date(); // Or statically: new Date("2025-08-01")
+>>>>>>> 094827d (Initial Commit)
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const dd = String(today.getDate()).padStart(2, '0');
     const yyyy = today.getFullYear();
@@ -11,9 +15,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const captionElement = document.getElementById('caption');
   
     // Normalize for range
+<<<<<<< HEAD
     const normalizedToday = new Date(2026, today.getMonth(), today.getDate());
     const startDate = new Date("2026-01-01");
     const endDate = new Date("2026-08-25");
+=======
+    const normalizedToday = new Date(2025, today.getMonth(), today.getDate());
+    const startDate = new Date("2025-08-01");
+    const endDate = new Date("2026-01-13");
+>>>>>>> 094827d (Initial Commit)
   
     if (normalizedToday >= startDate && normalizedToday <= endDate) {
       fetch(imagePath)
@@ -214,4 +224,8 @@ const trackIndex = daysSinceStart >= 0 && daysSinceStart < spotifyTrackIDs.lengt
   spotifyEmbed.src = `https://open.spotify.com/embed/track/${trackID}`;
   spotifyEmbed.style.display = 'block';
 });
+<<<<<<< HEAD
 // Small change for GitHub
+=======
+// Small change for GitHub
+>>>>>>> 094827d (Initial Commit)
