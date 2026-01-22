@@ -1,45 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
-<<<<<<< HEAD
-    const today = new Date(); // Or statically: new Date("2026-01-01")
-=======
-    const today = new Date(); // Or statically: new Date("2025-08-01")
->>>>>>> 094827d (Initial Commit)
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    const yyyy = today.getFullYear();
-    const filename = `${mm}-${dd}-${yyyy}.JPG`;
-    const imagePath = `images/${filename}`;
-    const defaultImage = 'images/default.jpg';
-  
-    const imageElement = document.getElementById('dailyImage');
-    const captionElement = document.getElementById('caption');
-  
-    // Normalize for range
-<<<<<<< HEAD
-    const normalizedToday = new Date(2026, today.getMonth(), today.getDate());
-    const startDate = new Date("2026-01-01");
-    const endDate = new Date("2026-08-25");
-=======
-    const normalizedToday = new Date(2025, today.getMonth(), today.getDate());
-    const startDate = new Date("2025-08-01");
-    const endDate = new Date("2026-01-13");
->>>>>>> 094827d (Initial Commit)
-  
-    if (normalizedToday >= startDate && normalizedToday <= endDate) {
-      fetch(imagePath)
-        .then(response => {
-          if (response.ok) {
-            imageElement.src = imagePath;
-          } else {
-            imageElement.src = defaultImage;
-          }
-        })
-        .catch(() => {
-          imageElement.src = defaultImage;
-        });
-    } else {
-      imageElement.src = defaultImage;
-    }
+  const today = new Date();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  const yyyy = today.getFullYear();
+
+  const filename = `${mm}-${dd}-${yyyy}.JPG`;   // must match actual file extension/case
+  const imagePath = `images/${filename}`;
+  const defaultImage = "images/default.jpg";
+
+  const imageElement = document.getElementById("dailyImage");
+  const captionElement = document.getElementById("caption");
+
+  // Range check (no time component)
+  const normalizedToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const startDate = new Date("2026-01-01");
+  const endDate = new Date("2026-08-25");
+
+  if (normalizedToday >= startDate && normalizedToday <= endDate) {
+    fetch(imagePath, { cache: "no-store" })
+      .then((r) => {
+        imageElement.src = r.ok ? imagePath : defaultImage;
+      })
+      .catch(() => {
+        imageElement.src = defaultImage;
+      });
+  } else {
+    imageElement.src = defaultImage;
+  }
+
+  if (captionElement) captionElement.textContent = `${mm}/${dd}/${yyyy}`;
+});
+
   
     // Set caption with date
     captionElement.textContent = `${mm}/${dd}/${yyyy}`;
@@ -224,8 +215,3 @@ const trackIndex = daysSinceStart >= 0 && daysSinceStart < spotifyTrackIDs.lengt
   spotifyEmbed.src = `https://open.spotify.com/embed/track/${trackID}`;
   spotifyEmbed.style.display = 'block';
 });
-<<<<<<< HEAD
-// Small change for GitHub
-=======
-// Small change for GitHub
->>>>>>> 094827d (Initial Commit)
