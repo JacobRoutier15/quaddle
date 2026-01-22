@@ -10,8 +10,26 @@
 .gallery-image{max-width:100%;width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
 .cal-weekdays,.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.25rem;}
 .cal-day{min-height:48px;padding:.35rem;overflow:hidden;}
+ .gallery-grid{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;          /* keeps it nice on mobile */
+    max-width:900px;
+    margin:0 auto;           /* center the whole gallery block */
+  }
+  .gallery-grid img{
+    width:min(320px, 45vw);
+    aspect-ratio:1/1;
+    object-fit:cover;
+    display:block;
+    border-radius:12px;
+  }
 </style>
 </head>
+ <nav class="top-nav">
+      <a href="paratu22music.html">Race Mix</a>
+    </nav>
 <body>
   <div class="container">
     <header>

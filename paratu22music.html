@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Ali — Quaddle</title>
+<link rel="stylesheet" href="./style.css?v=20250812" />
+<link rel="icon" href="data:," />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="main-title">A L I</h1>
+    </header>
+
+    <main>
+      <h2>Marathon Mix</h2>
+    </main>
+
+     <div id="gallery" class="gallery-grid"></div>
+
+<p>Here is your race playlist, I hope you like it. I know you're going to do great and be under 4 hours!</p>
+<p>When you hear Find You by Zedd, you're about halfway. When you hear 1901, you have 1 minute left til 4 hours!</p>
+<p>I am so proud of you no matter what time you run, and hope we are running buddies forever. </p>
+<p>Thank you for always training with me and I know we will have many more races together in the future.</p>
+
+</div>
+ <div class="mix-container">
+  <audio id="mixAudio" class="mix-audio" controls preload="metadata">
+    <!-- Fix: MP3 should be audio/mpeg -->
+    <source src="/ali.mp3" type="audio/mpeg" />
+    Sorry, your browser doesn’t support HTML5 audio.
+  </audio>
+
+  <div class="tracklist" id="tracklist" aria-label="Tracklist"></div>
+</div>
+
+<footer>
+  &copy; always thinking of you — love yacob
+</footer>
+<style>
+  .tracklist{max-width:900px;margin:16px auto 0;display:flex;flex-direction:column;gap:8px;}
+  .track-row{display:grid;grid-template-columns:80px 1fr;gap:12px;align-items:center;}
+  .track-time{font-variant-numeric:tabular-nums;opacity:.8;}
+  .track-btn{
+    text-align:left;
+    background:transparent;
+    border:1px solid rgba(0,0,0,.15);
+    padding:10px 12px;
+    border-radius:10px;
+    cursor:pointer;
+    
+  }
+  .mix-container { position: relative; z-index: 1; }
+  .track-btn { pointer-events: auto; }
+  .track-time{color:#fff;}
+  .track-btn{
+    color:#fff;
+    border:1px solid rgba(255,255,255,.25);
+  }
+  .track-btn:hover{background:rgba(255,255,255,.08);}
+  .track-time-btn{
+  background:transparent;
+  border:0;
+  padding:0;
+  color:#fff;
+  text-align:left;
+  cursor:pointer;
+  font-variant-numeric:tabular-nums;
+  opacity:.9;
+}
+.track-time-btn:hover{ text-decoration: underline; }
+ .track-btn:hover{background:rgba(0,0,0,.05);}
+</style>
+
+ 
+</style>
+
+<script>
+   window.addEventListener("DOMContentLoaded", () => {
+    const audio = document.getElementById("mixAudio");
+    const tracklistEl = document.getElementById("tracklist");
+
+    console.log("audio:", audio, "tracklistEl:", tracklistEl);
+
+    if (!audio || !tracklistEl) {
+      console.error("Missing #mixAudio or #tracklist in DOM");
+      return;
+    }
+
+  const tracks = [
+    { time: "0:00", title: "Flume / Moon Holiday – Insane (feat. Moon Holiday)" },
+    { time: "3:04", title: "Glass Animals – A Tear in Space (Airlock)" },
+    { time: "4:33", title: "SG Lewis / Ruel – Flames (feat. Ruel)" },
+    { time: "7:14", title: "Flux Pavilion / What So Not – 20·25" },
+    { time: "10:01", title: "Hayden James / ODESZA – Something About You" },
+    { time: "14:29", title: "ODESZA / Bettye LaVette – The Last Goodbye" },
+    { time: "19:07", title: "ROYA – Cruise" },
+    { time: "20:38", title: "Deorro – Five Hours" },
+    { time: "25:13", title: "Kaivon – Think of Me" },
+    { time: "27:33", title: "Super Duper – Time For My Soul" },
+    { time: "29:54", title: "The Temper Trap / John Summit – Sweet Disposition" },
+    { time: "33:00", title: "John Summit / Inéz – Light Years (feat. Inéz)" },
+    { time: "36:02", title: "Daniel Allan / NJOMZA – Believe" },
+    { time: "38:06", title: "Morgan Seatree / Florence + The Machine – Say My Name" },
+    { time: "39:50", title: "Flux Pavilion – Cracks (Flux Pavilion Remix)" },
+    { time: "43:43", title: "Kx5 (deadmau5 & Kaskade) – Escape (feat. HAYLA)" },
+    { time: "46:15", title: "Florence + The Machine / Swedish House Mafia – You Got One" },
+    { time: "49:27", title: "Zeds Dead – One Of These Mornings" },
+    { time: "51:35", title: "Aaron Hibell / Alex Wann – Set Me Free" },
+    { time: "54:34", title: "Audien – Kill The Lights (Audien Remix)" },
+    { time: "57:52", title: "Oskar Med K – Spellbound" },
+    { time: "59:46", title: "Gryffin – Desire (Gryffin Remix)" },
+
+    { time: "1:03:42", title: "MADSUN – Lost Minds" },
+    { time: "1:06:02", title: "Daniel Allan / Lyrah – I Just Need" },
+    { time: "1:07:17", title: "K.Flay / RAC – High Enough (RAC Remix)" },
+    { time: "1:09:01", title: "John Summit / HAYLA – Shiver" },
+    { time: "1:11:52", title: "BKAYE / Aria Ohlsson – All In My Head" },
+    { time: "1:14:08", title: "Aaron Hibell – Morning Light" },
+    { time: "1:17:00", title: "John Summit / Subtronics / Inéz – Crystallized (feat. Inéz)" },
+    { time: "1:19:32", title: "Halsey / Audien – Colors (Audien Remix)" },
+    { time: "1:23:12", title: "RL Grime / Ty Dolla $ign / TK Kravitz – Take It Away" },
+    { time: "1:26:13", title: "Lost Kings – WHAT’S THE MOVE" },
+    { time: "1:28:08", title: "Flux Pavilion – I Won’t Stop" },
+    { time: "1:30:14", title: "Laszewo – Headrush" },
+    { time: "1:32:19", title: "Laszewo – 3am" },
+    { time: "1:34:07", title: "K.Flay / Vanic – Can’t Sleep (Vanic Remix)" },
+    { time: "1:36:52", title: "John Summit / HAYLA / GRiZ – Where You Are (GRiZ Remix)" },
+    { time: "1:38:38", title: "GRiZ – Nobody Else" },
+    { time: "1:40:33", title: "The Chainsmokers / Absolutely – Air" },
+    { time: "1:42:35", title: "The Chainsmokers / Beau Nox – White Wine & Adderall" },
+    { time: "1:44:35", title: "Seven Lions × Illenium × Said The Sky – Rush Over Me" },
+    { time: "1:46:39", title: "Calvin Harris / Ellie Goulding – Free" },
+    { time: "1:48:12", title: "Daniel Allan / NJOMZA – Believe" },
+    { time: "1:49:53", title: "ILLENIUM / HAYLA – In My Arms" },
+    { time: "1:52:19", title: "John Summit – Go Back (feat. Julia Church)" },
+    { time: "1:54:04", title: "Ellie Goulding / Bassnectar – Lights (Bassnectar Remix)" },
+    { time: "1:57:05", title: "Zedd / Matthew Koma – Find You" },
+
+    { time: "2:00:55", title: "It’s Murph / Emi Grace – Stone Cold Eyes" },
+    { time: "2:04:15", title: "David Guetta – She Wolf" },
+    { time: "2:06:18", title: "M83 – Midnight City (Eric Prydz Private Remix)" },
+    { time: "2:11:07", title: "Dimitri Vegas & Like Mike / Martin Garrix – Tremor" },
+    { time: "2:13:24", title: "deadmau5 / Benny Benassi / Gary Go / BYNX – The Veldt Cinema" },
+    { time: "2:16:08", title: "DnD – On My Body" },
+    { time: "2:17:23", title: "BØRNS – Electric Love (Avello Remix)" },
+    { time: "2:19:56", title: "deadmau5 / Kaskade / John Summit – I Remember" },
+    { time: "2:22:12", title: "RÜFÜS DU SOL – Music Is Better" },
+    { time: "2:24:09", title: "Lavern / NEIMY – All I Want Is You" },
+    { time: "2:26:03", title: "Roosevelt – Automatic" },
+    { time: "2:26:44", title: "The Magician – You and Me" },
+    { time: "2:27:56", title: "Martin Garrix / Tove Lo – Pressure (feat. Tove Lo)" },
+    { time: "2:29:41", title: "Elley Duhé / Whethan – Money On The Dash" },
+    { time: "2:31:20", title: "Galantis / Yacht Club – Runaway (U & I) (Yacht Club Remix)" },
+    { time: "2:32:02", title: "Ian Asher & Galantis – Runaway (U & I)" },
+    { time: "2:34:00", title: "Elderbrook / Nimino – Ain’t Losing You" },
+    { time: "2:35:49", title: "Dua Lipa / The Blaze – Illusion (The Blaze Remix)" },
+    { time: "2:39:14", title: "Curbi – Flying" },
+    { time: "2:41:01", title: "Bag Raiders – Shooting Stars" },
+    { time: "2:44:29", title: "El Profesor / HUGEL – Bella Ciao (HUGEL Remix)" },
+    { time: "2:46:58", title: "Wurme – Home" },
+    { time: "2:48:25", title: "Klangkarussell / Jaymes Young – Sun Don’t Shine" },
+    { time: "2:50:50", title: "Dimitri Vegas & Like Mike / R3HAB / Prezioso – Shooting Darts" },
+    { time: "2:52:37", title: "Zedd – Clarity" },
+    { time: "2:56:11", title: "Zedd / Hayley Williams – Stay The Night" },
+    { time: "2:58:01", title: "Ivan Gough / Feenixpawl / Georgi Kay / Axwell – In My Mind (Axwell Remix)" },
+    { time: "2:59:41", title: "Ty Dolla $ign / Future / Rae Sremmurd / Louis The Child – Blasé" },
+
+    { time: "3:02:29", title: "It’s Murph / Arlo / Emi Grace – Through My System" },
+    { time: "3:04:31", title: "Calvin Harris / Ellie Goulding – Outside (feat. Ellie Goulding)" },
+    { time: "3:07:09", title: "Jai Wolf / REHMA – Say My Name" },
+    { time: "3:09:05", title: "Calvin Harris / John Newman – Blame (feat. John Newman)" },
+    { time: "3:11:09", title: "VisionV – Higher" },
+    { time: "3:12:25", title: "Nimino / Maverick Sabre – Beside Of Me" },
+    { time: "3:15:24", title: "Zedd / Matthew Koma – Spectrum" },
+    { time: "3:18:44", title: "David Guetta / Sia – Titanium (feat. Sia)" },
+    { time: "3:22:03", title: "Calvin Harris / Florence Welch – Sweet Nothing" },
+    { time: "3:23:40", title: "Avicii – Levels" },
+    { time: "3:25:31", title: "Distant Matter / Emilia Ali – Want Me" },
+    { time: "3:28:08", title: "Martin Garrix / Dua Lipa – Scared To Be Lonely" },
+    { time: "3:31:23", title: "Lyrah – Nowhere Left To Run" },
+    { time: "3:32:49", title: "Ian Asher / Phantogram – Black Out Days (Stay Away)" },
+    { time: "3:35:26", title: "Flux Pavilion & Matthew Koma – Emotional" },
+    { time: "3:38:15", title: "ILLENIUM / Jon Bellion / Said The Sky – Good Things Fall Apart" },
+    { time: "3:42:37", title: "Chrystal / NOTION – The Days (NOTION Remix)" },
+    { time: "3:44:38", title: "Zeds Dead / MKLA – Alive" },
+    { time: "3:46:37", title: "RÜFÜS DU SOL – Innerbloom" },
+    { time: "3:52:39", title: "Dillon Francis / ILLENIUM / EVAN GIIA – Don’t Let Me Let Go" },
+    { time: "3:55:19", title: "Flume / Tove Lo – Say It (Illenium Remix)" },
+    { time: "3:59:06", title: "Dance Yourself Clean / Back Talk – 1901" }
+  ];
+
+     function parseTimeToSeconds(t) {
+      // keep only digits and colons, drop any hidden chars
+      const clean = String(t).trim().replace(/[^\d:]/g, "");
+      const parts = clean.split(":").map((x) => Number(x));
+      if (parts.some((n) => Number.isNaN(n))) return 0;
+      if (parts.length === 2) return parts[0] * 60 + parts[1];
+      if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+      return 0;
+    }
+
+function renderTracklist() {
+  tracklistEl.innerHTML = "";
+
+  tracks.forEach((trk) => {
+    const row = document.createElement("div");
+    row.className = "track-row";
+
+    const timeBtn = document.createElement("button");
+    timeBtn.className = "track-time-btn";
+    timeBtn.type = "button";
+    timeBtn.textContent = trk.time;
+
+    const titleBtn = document.createElement("button");
+    titleBtn.className = "track-btn";
+    titleBtn.type = "button";
+    titleBtn.textContent = trk.title;
+
+    const seek = async () => {
+      const targetSeconds = parseTimeToSeconds(trk.time);
+      console.log("seek", JSON.stringify(trk.time), "=>", targetSeconds);
+
+      if (audio.readyState < 1) {
+        await new Promise((resolve) =>
+          audio.addEventListener("loadedmetadata", resolve, { once: true })
+        );
+      }
+
+      audio.currentTime = Math.min(targetSeconds, audio.duration || targetSeconds);
+      try { await audio.play(); } catch (_) {}
+    };
+
+    timeBtn.addEventListener("click", seek);
+    titleBtn.addEventListener("click", seek);
+
+    row.appendChild(timeBtn);
+    row.appendChild(titleBtn);
+    tracklistEl.appendChild(row);
+  });
+}
+
+
+    renderTracklist();
+  });
+</script>
+    
