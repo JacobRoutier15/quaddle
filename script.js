@@ -4,32 +4,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const dd = String(today.getDate()).padStart(2, "0");
   const yyyy = today.getFullYear();
 
-  const filename = `${mm}-${dd}-${yyyy}.JPG`;   // must match actual file extension/case
-  const imagePath = `images/${filename}`;
-  const defaultImage = "images/default.jpg";
-
   const imageElement = document.getElementById("dailyImage");
   const captionElement = document.getElementById("caption");
 
-  // Range check (no time component)
-  const normalizedToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  const startDate = new Date("2026-01-01");
-  const endDate = new Date("2026-08-25");
+  const defaultImage = "images/default.jpg";
 
-  if (normalizedToday >= startDate && normalizedToday <= endDate) {
-    fetch(imagePath, { cache: "no-store" })
+  // Try current year first, then fall back to 2025
+  const candidates = [
+    `images/${mm}-${dd}-${yyyy}.JPG`,
+    `images/${mm}-${dd}-2025.JPG`
+  ];
+
+  function tryLoad(index = 0) {
+    if (index >= candidates.length) {
+      imageElement.src = defaultImage;
+      return;
+    }
+
+    fetch(candidates[index], { cache: "no-store" })
       .then((r) => {
-        imageElement.src = r.ok ? imagePath : defaultImage;
+        if (r.ok) {
+          imageElement.src = candidates[index];
+        } else {
+          tryLoad(index + 1);
+        }
       })
-      .catch(() => {
-        imageElement.src = defaultImage;
-      });
-  } else {
-    imageElement.src = defaultImage;
+      .catch(() => tryLoad(index + 1));
   }
 
-  if (captionElement) captionElement.textContent = `${mm}/${dd}/${yyyy}`;
+  tryLoad();
+
+  captionElement.textContent = `${mm}/${dd}/${yyyy}`;
 });
+
 
   
     // Set caption with date
